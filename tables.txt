@@ -1,0 +1,72 @@
+1. **Students Table**:
+   - Student ID
+   - Name
+   - Date of Birth
+   - Gender
+   - Contact Information (Phone, Email, Address)
+   - Parent/Guardian Information
+
+2. **Teachers Table**:
+   - Teacher ID
+   - Name
+   - Contact Information
+   - Subject(s) Taught
+   - Department
+   - Joining Date
+
+3. **Courses Table**:
+   - Course ID
+   - Course Name
+   - Description
+   - Teacher ID (foreign key)
+   - Class ID (if applicable)
+
+4. **Classes/School Sections Table**:
+   - Class ID
+   - Class Name/Section
+   - Class Teacher
+   - Class Schedule
+   - Capacity
+
+5. **Enrollments Table**:
+   - Enrollment ID
+   - Student ID (foreign key)
+   - Class ID (foreign key)
+   - Enrollment Date
+   - Academic Year
+
+6. **Attendance Table**:
+   - Attendance ID
+   - Student ID (foreign key)
+   - Class ID (foreign key)
+   - Date
+   - Attendance Status (Present/Absent)
+
+7. **Grades/Results Table**:
+   - Result ID
+   - Student ID (foreign key)
+   - Course ID (foreign key)
+   - Marks/Grade
+   - Exam Date
+   - Remarks
+
+8. **Events/Activities Table**:
+   - Event ID
+   - Event Name
+   - Description
+   - Date
+   - Location
+
+9. **Payments/Financials Table**:
+   - Payment ID
+   - Student ID (foreign key)
+   - Payment Date
+   - Amount
+   - Payment Method
+
+10. **Library Books Table**:
+    - Book ID
+    - Title
+    - Author
+    - ISBN
+    - Availability
