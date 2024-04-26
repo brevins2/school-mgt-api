@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
-    const students = sequelize.define("students", {
-        student_id: {
+    const grades = sequelize.define("grades", {
+        result_id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
@@ -8,53 +8,53 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 11]
             }
         },
-        name: {
+        exam_name: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
                 len: [0, 100]
             }
         },
-        dob: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 100]
-            }
-        },
-        gender: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 100]
-            }
-        },
-        contact_info: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 100]
-            }
-        },
-        guardian_info: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 255]
-            }
-        },
-        profile_pic: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 100]
-            }
-        },
-        student_age: {
+        student_id: {
             type: Sequelize.INTEGER,
-            allowNull: true,
+            allowNull: false,
+            validate: {
+                len: [0, 11]
+            }
+        },
+        course_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            validate: {
+                len: [0, 11]
+            }
+        },
+        marks: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
             validate: {
                 len: [0, 4]
+            }
+        },
+        exam_date: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 100]
+            }
+        },
+        remarks: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 100]
+            }
+        },
+        teacher_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            validate: {
+                len: [0, 11]
             }
         }
     },
@@ -62,33 +62,35 @@ module.exports = (sequelize, Sequelize) => {
         indexes: [
             {
                 unique: true,
+                fields: ['result_id']
+            },
+            {
+                fields: ['exam_name']
+            },
+            {
                 fields: ['student_id']
             },
             {
-                fields: ['name']
+                fields: ['course_id']
             },
             {
-                unique: true,
-                fields: ['dob']
+                fields: ['marks']
             },
             {
-                fields: ['gender']
+                fields: ['exam_date']
             },
             {
-                unique: true,
-                fields: ['contact_info']
+                fields: ['remarks']
             },
             {
-                fields: ['guardian_info']
-            },
-            {
-                fields: ['profile_pic']
-            },
-            {
-                fields: ['student_age']
+                fields: ['teacher_id']
             }
         ]
     });
 
-    return students;
+    grades.belongsTo(sequelize.models.students, { foreignKey: 'student_id' });
+    grades.belongsTo(sequelize.models.teachers, { foreignKey: 'teacher_id' });
+    grades.belongsTo(sequelize.models.courses, { foreignKey: 'course_id' });
+
+    return grades;
 };

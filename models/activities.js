@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
-    const students = sequelize.define("students", {
-        student_id: {
+    const school_events = sequelize.define("school_events", {
+        event_id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
@@ -8,53 +8,39 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 11]
             }
         },
-        name: {
+        event_name: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            validate: {
+                len: [0, 100]
+            }
+        },
+        description: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 200]
+            }
+        },
+        event_date: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
                 len: [0, 100]
             }
         },
-        dob: {
+        location: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
                 len: [0, 100]
             }
         },
-        gender: {
+        event_status: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
                 len: [0, 100]
-            }
-        },
-        contact_info: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 100]
-            }
-        },
-        guardian_info: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 255]
-            }
-        },
-        profile_pic: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 100]
-            }
-        },
-        student_age: {
-            type: Sequelize.INTEGER,
-            allowNull: true,
-            validate: {
-                len: [0, 4]
             }
         }
     },
@@ -62,33 +48,25 @@ module.exports = (sequelize, Sequelize) => {
         indexes: [
             {
                 unique: true,
-                fields: ['student_id']
+                fields: ['event_id']
             },
             {
-                fields: ['name']
+                fields: ['event_name']
             },
             {
-                unique: true,
-                fields: ['dob']
+                fields: ['description']
             },
             {
-                fields: ['gender']
+                fields: ['event_date']
             },
             {
-                unique: true,
-                fields: ['contact_info']
+                fields: ['location']
             },
             {
-                fields: ['guardian_info']
-            },
-            {
-                fields: ['profile_pic']
-            },
-            {
-                fields: ['student_age']
+                fields: ['event_status']
             }
         ]
     });
 
-    return students;
+    return school_events;
 };

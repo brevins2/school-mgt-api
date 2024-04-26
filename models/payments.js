@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
-    const students = sequelize.define("students", {
-        student_id: {
+    const payments = sequelize.define("payments", {
+        paymennt_id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
@@ -8,53 +8,53 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 11]
             }
         },
-        name: {
+        student_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            validate: {
+                len: [0, 11]
+            }
+        },
+        payment_date: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
                 len: [0, 100]
             }
         },
-        dob: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 100]
-            }
-        },
-        gender: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 100]
-            }
-        },
-        contact_info: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 100]
-            }
-        },
-        guardian_info: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 255]
-            }
-        },
-        profile_pic: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 100]
-            }
-        },
-        student_age: {
+        amount: {
             type: Sequelize.INTEGER,
             allowNull: true,
             validate: {
-                len: [0, 4]
+                len: [0, 11]
+            }
+        },
+        balance: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+            validate: {
+                len: [0, 11]
+            }
+        },
+        payment_method: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 100]
+            }
+        },
+        depositor: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 100]
+            }
+        },
+        status: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 100]
             }
         }
     },
@@ -62,33 +62,33 @@ module.exports = (sequelize, Sequelize) => {
         indexes: [
             {
                 unique: true,
+                fields: ['paymennt_id']
+            },
+            {
                 fields: ['student_id']
             },
             {
-                fields: ['name']
+                fields: ['payment_date']
             },
             {
-                unique: true,
-                fields: ['dob']
+                fields: ['amount']
             },
             {
-                fields: ['gender']
+                fields: ['balance']
             },
             {
-                unique: true,
-                fields: ['contact_info']
+                fields: ['payment_method']
             },
             {
-                fields: ['guardian_info']
+                fields: ['depositor']
             },
             {
-                fields: ['profile_pic']
-            },
-            {
-                fields: ['student_age']
+                fields: ['status']
             }
         ]
     });
 
-    return students;
+    payments.belongsTo(sequelize.models.students, { foreignKey: 'student_id' });
+
+    return payments;
 };

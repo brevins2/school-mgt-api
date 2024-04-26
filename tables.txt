@@ -5,14 +5,18 @@
    - Gender
    - Contact Information (Phone, Email, Address)
    - Parent/Guardian Information
+   - Student image
+   - Age
 
 2. **Teachers Table**:
    - Teacher ID
    - Name
    - Contact Information
+   - Gender
    - Subject(s) Taught
    - Department
    - Joining Date
+   - Profile picture
 
 3. **Courses Table**:
    - Course ID
@@ -44,11 +48,13 @@
 
 7. **Grades/Results Table**:
    - Result ID
+   - Exam name
    - Student ID (foreign key)
    - Course ID (foreign key)
    - Marks/Grade
    - Exam Date
    - Remarks
+   - Teacher
 
 8. **Events/Activities Table**:
    - Event ID
@@ -62,11 +68,15 @@
    - Student ID (foreign key)
    - Payment Date
    - Amount
+   - Balance
    - Payment Method
+   - Depositor
+   - Status
 
 10. **Library Books Table**:
-    - Book ID
-    - Title
-    - Author
-    - ISBN
-    - Availability
+   - Book ID
+   - Title
+   - Author
+   - ISBN
+   - Availability
+   - Book cover

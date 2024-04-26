@@ -1,21 +1,18 @@
 module.exports = (sequelize, Sequelize) => {
-    const students = sequelize.define("students", {
-        student_id: {
+    const library = sequelize.define("library", {
+        book_id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
-            autoIncrement: true,
-            validate: {
-                len: [0, 11]
-            }
+            autoIncrement: true
         },
-        name: {
+        title: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
                 len: [0, 100]
             }
         },
-        dob: {
+        author: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
@@ -29,32 +26,25 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 100]
             }
         },
-        contact_info: {
+        ISBN: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
                 len: [0, 100]
             }
         },
-        guardian_info: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 255]
-            }
-        },
-        profile_pic: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 100]
-            }
-        },
-        student_age: {
+        Availability: {
             type: Sequelize.INTEGER,
             allowNull: true,
             validate: {
-                len: [0, 4]
+                len: [0, 11]
+            }
+        },
+        book_cover: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 100]
             }
         }
     },
@@ -62,33 +52,29 @@ module.exports = (sequelize, Sequelize) => {
         indexes: [
             {
                 unique: true,
-                fields: ['student_id']
+                fields: ['book_id']
             },
             {
-                fields: ['name']
+                fields: ['title']
             },
             {
                 unique: true,
-                fields: ['dob']
+                fields: ['author']
             },
             {
                 fields: ['gender']
             },
             {
-                unique: true,
-                fields: ['contact_info']
+                fields: ['ISBN']
             },
             {
-                fields: ['guardian_info']
+                fields: ['Availability']
             },
             {
-                fields: ['profile_pic']
-            },
-            {
-                fields: ['student_age']
+                fields: ['book_cover']
             }
         ]
     });
 
-    return students;
+    return library;
 };

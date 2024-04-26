@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
-    const users = sequelize.define("users", {
-        userid: {
+    const courses = sequelize.define("courses", {
+        course_id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
@@ -8,42 +8,35 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 11]
             }
         },
-        name: {
+        course_name: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
                 len: [0, 100]
             }
         },
-        email: {
+        description: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
                 len: [0, 100]
             }
         },
-        password: {
-            type: Sequelize.STRING,
-            allowNull: true,
+        teacher_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
             validate: {
-                len: [0, 100]
+                len: [0, 11]
             }
         },
-        token: {
-            type: Sequelize.STRING,
-            allowNull: true,
+        class_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
             validate: {
-                len: [0, 24]
+                len: [0, 11]
             }
         },
-        status: {
-            type: Sequelize.STRING,
-            allowNull: true,
-            validate: {
-                len: [0, 24]
-            }
-        },
-        avatar: {
+        pass_mark: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
@@ -55,30 +48,28 @@ module.exports = (sequelize, Sequelize) => {
         indexes: [
             {
                 unique: true,
-                fields: ['userid']
+                fields: ['course_id']
             },
             {
-                unique: true,
-                fields: ['email']
+                fields: ['course_name']
             },
             {
-                fields: ['password']
+                fields: ['description']
             },
             {
-                fields: ['name']
+                fields: ['teacher_id']
             },
             {
-                unique: true,
-                fields: ['token']
+                fields: ['class_id']
             },
             {
-                fields: ['status']
+                fields: ['pass_mark']
             },
-            {
-                fields: ['avatar']
-            }
         ]
     });
 
-    return users;
+    courses.belongsTo(sequelize.models.teachers, { foreignKey: 'teacher_id' });
+    courses.belongsTo(sequelize.models.classes, { foreignKey: 'class_id' });
+
+    return courses;
 };
