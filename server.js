@@ -1,5 +1,4 @@
 const express = require('express');
-const db = require('./db.config');
 const cors = require('cors');
 const db_models = require('./models/index');
 
@@ -31,10 +30,12 @@ app.get('/', function (req, res) {
                 Welcome to school api in Node Express js that has been designed based on the schools in Sudan and Africa at large
             `);
         } else {
-            res.send(success);
+            res.sendFile(path.join(__dirname, './templates/home-message.html'));
         }
     });
 });
+
+app.use('/users', require('./routes/users'))
 
 
 app.listen(3000, () => {
