@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const db_models = require('./models/index');
+var bodyParser = require('body-parser');
 
 const fs = require('fs');
 const path = require('path');
@@ -14,6 +15,10 @@ var corsoptions = {
 
 app.use(cors(corsoptions));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
 
 db_models.sequelize.sync().then(() => {}).catch(err => {
   console.error('Error syncing database tables:', err);
@@ -36,6 +41,8 @@ app.get('/', function (req, res) {
 });
 
 app.use('/users', require('./routes/users'))
+app.use('/classes', require('./routes/classes'))
+app.use('/teachers', require('./routes/teachers'))
 
 
 app.listen(3000, () => {

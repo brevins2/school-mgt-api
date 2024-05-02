@@ -15,6 +15,20 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 100]
             }
         },
+        email: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 100]
+            }
+        },
+        teacher_token: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 24]
+            }
+        },
         contact_info: {
             type: Sequelize.STRING,
             allowNull: true,
@@ -69,6 +83,13 @@ module.exports = (sequelize, Sequelize) => {
             },
             {
                 unique: true,
+                fields: ['email']
+            },
+            {
+                unique: true,
+                fields: ['teacher_token']
+            },
+            {
                 fields: ['contact_info']
             },
             {
