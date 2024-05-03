@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const classes = sequelize.define("classes", {
-        course_id: {
+        class_id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
@@ -41,7 +41,7 @@ module.exports = (sequelize, Sequelize) => {
         indexes: [
             {
                 unique: true,
-                fields: ['course_id']
+                fields: ['class_id']
             },
             {
                 fields: ['class_name']

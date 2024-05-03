@@ -36,6 +36,13 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 24]
             }
         },
+        account_token: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 24]
+            }
+        },
         status: {
             type: Sequelize.STRING,
             allowNull: true,
@@ -70,6 +77,10 @@ module.exports = (sequelize, Sequelize) => {
             {
                 unique: true,
                 fields: ['token']
+            },
+            {
+                unique: true,
+                fields: ['account_token']
             },
             {
                 fields: ['status']
