@@ -15,14 +15,7 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 100]
             }
         },
-        teacher_id: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-            validate: {
-                len: [0, 11]
-            }
-        },
-        class_schedule: {
+        syllabus: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
@@ -47,18 +40,13 @@ module.exports = (sequelize, Sequelize) => {
                 fields: ['class_name']
             },
             {
-                fields: ['teacher_id']
-            },
-            {
-                fields: ['class_schedule']
+                fields: ['syllabus']
             },
             {
                 fields: ['capacity']
             },
         ]
     });
-
-    classes.belongsTo(sequelize.models.teachers, { foreignKey: 'teacher_id' });
 
     return classes;
 };

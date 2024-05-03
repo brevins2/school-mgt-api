@@ -11,7 +11,7 @@ const teachers = express();
 
 
 teachers.get('/', (req, res) => {
-    db.query('SELECT teacher_id, name, email, contact_info, gender, subjects_taught, department, joining_date, profile_pic FROM teachers', (err, rows) => {
+    db.query('SELECT teacher_id, name, email, contact_info, gender, class_id, subjects_taught, department, joining_date, profile_pic FROM teachers', (err, rows) => {
         if(err) throw err;
         if(rows.length == 0) res.status(200).json({status: 200, message: 'No teachers found', data: rows});
         if(rows.length > 0) res.status(200).json({status: 200, message: 'teachers fetched successfully', data: rows});
@@ -25,7 +25,7 @@ teachers.get('/get-teacher-by-token', (req, res) => {
         return res.status(400).json({success: 400, message: "token is required"})
     }
 
-    db.query('SELECT teacher_id, name, contact_info, gender, subjects_taught, department, joining_date, profile_pic FROM teachers WHERE teacher_token =?', [ token ], (err, rows) => {
+    db.query('SELECT teacher_id, name, contact_info, gender, class_id, subjects_taught, department, joining_date, profile_pic FROM teachers WHERE teacher_token =?', [ token ], (err, rows) => {
         if(err) throw err;
         if(rows.length == 0) {
             return res.status(400).json({ status: 400, message: "teacher not found" });
@@ -37,14 +37,14 @@ teachers.get('/get-teacher-by-token', (req, res) => {
 
 teachers.get('/:id', (req, res) => {
     const teacher_id = req.params.id;
-    db.query('SELECT teacher_id, name, contact_info, gender, subjects_taught, department, joining_date, profile_pic FROM teachers WHERE teacher_id =?', [ teacher_id ], (err, rows) => {
+    db.query('SELECT teacher_id, name, contact_info, gender, class_id, subjects_taught, department, joining_date, profile_pic FROM teachers WHERE teacher_id =?', [ teacher_id ], (err, rows) => {
         if(err) throw err;
         res.json({status: 200, message: 'teacher fetched successfully', data: rows});
     });
 });
 
 teachers.post('/add-teacher', (req, res) => {
-    const { name, email, contact_info, gender, subjects_taught, department, joining_date, profile_pic, password } = req.body;
+    const { name, email, contact_info, gender, subjects_taught, department, joining_date, class_id, password } = req.body;
 
     const date = new Date();
     const createdAt = date.getFullYear()+'/'+date.getUTCMonth()+'/'+date.getUTCDate();
@@ -67,7 +67,7 @@ teachers.post('/add-teacher', (req, res) => {
         if(err) return res.status(400).json({ status: 400, error: err });
         if(rows.length == 0){
             try {
-                db.query('INSERT INTO teachers (name, email, teacher_token, contact_info, gender, subjects_taught, department, joining_date, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [ name, email, account_token, contact_info, gender, subjects_taught, department, joining_date, createdAt, updatedAt ], (err, result) => {
+                db.query('INSERT INTO teachers (name, email, teacher_token, contact_info, gender, class_id, subjects_taught, department, joining_date, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [ name, email, account_token, contact_info, gender, class_id, subjects_taught, department, joining_date, createdAt, updatedAt ], (err, result) => {
                     if(err) return res.status(400).json({ status: 400, message: err });
                     if(result.affectedRows === 1) {
                         try {
@@ -98,7 +98,7 @@ teachers.post('/add-teacher', (req, res) => {
 
 teachers.put('/update-teacher/:id', (req, res) => {
     const { teacher_id } = req.params.id;
-    const { name, email, contact_info, gender, subjects_taught, department, joining_date, profile_pic, token } = req.body;
+    const { name, email, contact_info, gender, class_id, subjects_taught, department, joining_date, profile_pic, token } = req.body;
     
     if(!name) {
         return res.status(400).json({ status: 400, message: "Missing required name" })
@@ -127,6 +127,9 @@ teachers.put('/update-teacher/:id', (req, res) => {
     if(!token) {
         return res.status(400).json({ status: 400, message: "Missing required token" })
     }
+    if(!class_id) {
+        return res.status(400).json({ status: 400, message: "Missing required class_id" })
+    }
     
     // const required_values = [ name, email, contact_info, gender, subjects_taught, department, joining_date, profile_pic, teacher_token ];
     // const result_value = '';
@@ -138,7 +141,7 @@ teachers.put('/update-teacher/:id', (req, res) => {
 
     // console.log(result_value);
 
-    db.query('UPDATE teachers SET name =?, email =?, contact_info =?, gender =?, subjects_taught =?, department =?, joining_date =? WHERE teacher_token =?', [ name, email, contact_info, gender, subjects_taught, department, joining_date, token ], (err, row) => {
+    db.query('UPDATE teachers SET name =?, email =?, contact_info =?, gender =?, class_id =?, subjects_taught =?, department =?, joining_date =? WHERE teacher_token =?', [ name, email, contact_info, gender, class_id, subjects_taught, department, joining_date, token ], (err, row) => {
         if(err) return res.status(400).json({ status: 400, message: err });
         if(row.affectedRows == 1) {
             try {

@@ -36,6 +36,13 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 100]
             }
         },
+        class_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            validate: {
+                len: [0, 11]
+            }
+        },
         gender: {
             type: Sequelize.STRING,
             allowNull: true,
@@ -91,6 +98,10 @@ module.exports = (sequelize, Sequelize) => {
             },
             {
                 fields: ['contact_info']
+            },
+            {
+                unique: true,
+                fields: ['class_id']
             },
             {
                 fields: ['gender']
