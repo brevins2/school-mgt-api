@@ -19,7 +19,7 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 100]
             }
         },
-        gender: {
+        dedicated_classes: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
@@ -33,7 +33,7 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 100]
             }
         },
-        Availability: {
+        availability: {
             type: Sequelize.INTEGER,
             allowNull: true,
             validate: {
@@ -62,13 +62,13 @@ module.exports = (sequelize, Sequelize) => {
                 fields: ['author']
             },
             {
-                fields: ['gender']
+                fields: ['dedicated_classes']
             },
             {
                 fields: ['ISBN']
             },
             {
-                fields: ['Availability']
+                fields: ['availability']
             },
             {
                 fields: ['book_cover']
