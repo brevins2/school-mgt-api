@@ -22,6 +22,13 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 11]
             }
         },
+        teacher_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            validate: {
+                len: [0, 11]
+            }
+        },
         date_taken: {
             type: Sequelize.STRING,
             allowNull: true,
@@ -50,6 +57,9 @@ module.exports = (sequelize, Sequelize) => {
                 fields: ['class_id']
             },
             {
+                fields: ['teacher_id']
+            },
+            {
                 fields: ['date_taken']
             },
             {
@@ -60,6 +70,7 @@ module.exports = (sequelize, Sequelize) => {
 
     attendences.belongsTo(sequelize.models.students, { foreignKey: 'student_id' });
     attendences.belongsTo(sequelize.models.classes, { foreignKey: 'class_id' });
+    attendences.belongsTo(sequelize.models.teachers, { foreignKey: 'teacher_id' });
 
     return attendences;
 };

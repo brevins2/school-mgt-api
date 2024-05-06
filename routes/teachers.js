@@ -100,36 +100,16 @@ teachers.put('/update-teacher/:id', (req, res) => {
     const { teacher_id } = req.params.id;
     const { name, email, contact_info, gender, class_id, subjects_taught, department, joining_date, profile_pic, token } = req.body;
     
-    if(!name) {
-        return res.status(400).json({ status: 400, message: "Missing required name" })
-    }
-    if(!email) {
-        return res.status(400).json({ status: 400, message: "Missing required email" })
-    }
-    if(!contact_info) {
-        return res.status(400).json({ status: 400, message: "Missing required contact_info" })
-    }
-    if(!gender) {
-        return res.status(400).json({ status: 400, message: "Missing required gender" })
-    }
-    if(!subjects_taught) {
-        return res.status(400).json({ status: 400, message: "Missing required subjects_taught" })
-    }
-    if(!department) {
-        return res.status(400).json({ status: 400, message: "Missing required department" })
-    }
-    if(!joining_date) {
-        return res.status(400).json({ status: 400, message: "Missing required joining_date" })
-    }
-    if(!profile_pic) {
-        return res.status(400).json({ status: 400, message: "Missing required profile_pic" })
-    }
-    if(!token) {
-        return res.status(400).json({ status: 400, message: "Missing required token" })
-    }
-    if(!class_id) {
-        return res.status(400).json({ status: 400, message: "Missing required class_id" })
-    }
+    if(!name) return res.status(400).json({ status: 400, message: "Missing required name" })
+    if(!email) return res.status(400).json({ status: 400, message: "Missing required email" })
+    if(!contact_info) return res.status(400).json({ status: 400, message: "Missing required contact_info" })
+    if(!gender) return res.status(400).json({ status: 400, message: "Missing required gender" })
+    if(!subjects_taught) return res.status(400).json({ status: 400, message: "Missing required subjects_taught" })
+    if(!department) return res.status(400).json({ status: 400, message: "Missing required department" })
+    if(!joining_date) return res.status(400).json({ status: 400, message: "Missing required joining_date" })
+    if(!profile_pic) return res.status(400).json({ status: 400, message: "Missing required profile_pic" })
+    if(!token) return res.status(400).json({ status: 400, message: "Missing required token" })
+    if(!class_id) return res.status(400).json({ status: 400, message: "Missing required class_id" })
     
     // const required_values = [ name, email, contact_info, gender, subjects_taught, department, joining_date, profile_pic, teacher_token ];
     // const result_value = '';
@@ -179,7 +159,7 @@ teachers.delete('/delete-teacher', (req, res) => {
             }
         });
     } catch(err) {
-        return res.status(500).json({ status: 500, message: 'Internal server error' });
+        return res.status(500).json({ status: 500, message: 'Internal server error', error: err.message });
     }
 });
 

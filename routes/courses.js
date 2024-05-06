@@ -16,12 +16,12 @@ courses.get('/', (req, res) => {
 });
 
 courses.get('/:id', (req, res) => {
-    const subject_id = req.params.id;
-    if(!class_id) {
-        return res.status(400).json({ status: 400, message: "subject_id is required" });
+    const course_id = req.params.id;
+    if(!course_id) {
+        return res.status(400).json({ status: 400, message: "course_id is required" });
     }
 
-    db.query('SELECT course_id, course_name, description, teacher_id, class_id, pass_mark FROM courses WHERE course_id =?', [ class_id ], (err, rows) => {
+    db.query('SELECT course_id, course_name, description, teacher_id, class_id, pass_mark FROM courses WHERE course_id =?', [ course_id ], (err, rows) => {
         if(err)  return res.status(400).json({ status: 400, message: err });
         if(rows.length === 0) {
             return res.status(200).json({ status: 200, message: "subject not found" });
@@ -32,27 +32,29 @@ courses.get('/:id', (req, res) => {
 })
 
 courses.post('/add-course', (req, res) => {
-    const { class_name, syllabus, capacity } = req.body;
-    if(!capacity) return res.status(400).json({ status: 400, message: 'Missing required capacity' });
-    if(!class_name) return res.status(400).json({ status: 400, message: 'Missing required class_name' });
-    if(!syllabus) return res.status(400).json({ status: 400, message: 'Missing required syllabus' });
+    const { course_name, description, teacher_id, class_id, pass_mark } = req.body;
+    if(!course_name) return res.status(400).json({ status: 400, message: 'Missing required course_name' });
+    if(!description) return res.status(400).json({ status: 400, message: 'Missing required description' });
+    if(!teacher_id) return res.status(400).json({ status: 400, message: 'Missing required teacher_id' });
+    if(!class_id) return res.status(400).json({ status: 400, message: 'Missing required class_id' });
+    if(!pass_mark) return res.status(400).json({ status: 400, message: 'Missing required pass_mark' });
 
     const date = new Date();
     const createdAt = date.getFullYear()+'/'+date.getUTCMonth()+'/'+date.getUTCDate();
     const updatedAt = date.getFullYear()+'/'+date.getUTCMonth()+'/'+date.getUTCDate();
 
     try {
-        db.query('SELECT * FROM course_id WHERE course_name =?', [ class_name ], (err, rows) => {
+        db.query('SELECT * FROM courses WHERE course_name =?', [ course_name ], (err, rows) => {
             if(err) return res.status(400).json({ status: 400, message: err });
             if(rows.length > 0) {
-                return res.status(400).json({ status: 400, message: 'class_name already exists' });
+                return res.status(400).json({ status: 400, message: 'cousre_name already exists' });
             } else {
-                db.query('INSERT INTO classes (course_name, description, teacher_id, class_id, pass_mark, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)', [ course_name, description, teacher_id, class_id, pass_mark, createdAt, updatedAt ], (err, result) => {
+                db.query('INSERT INTO courses (course_name, description, teacher_id, class_id, pass_mark, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)', [ course_name, description, teacher_id, class_id, pass_mark, createdAt, updatedAt ], (err, result) => {
                     if(err) return res.status(400).json({ status: 400, message: err });
                     if(result.affectedRows === 1) {
                         return res.status(200).json({ status: 200, message: 'class created successfully' });
                     } else {
-                        return res.status(400).json({ status: 400, message: '' });
+                        return res.status(400).json({ status: 400, message: 'class not inserted' });
                     }
                 })
             }
@@ -65,21 +67,24 @@ courses.post('/add-course', (req, res) => {
 courses.put('/update-course/:id', (req, res) => {
     const course_id = req.params.id;
     if (!course_id) return res.status(400).json({ status: 400, error: "Missing required course_id" });
+    if(typeof course_id !== Number) return res.status(400).json({ status: 400, error: "course_id must be number" });
 
     const { course_name, description, teacher_id, class_id, pass_mark } = req.body;
-    if(!capacity) return res.status(400).json({ status: 400, message: 'Missing required capacity' });
-    if(!class_name) return res.status(400).json({ status: 400, message: 'Missing required class_name' });
-    if(!syllabus) return res.status(400).json({ status: 400, message: 'Missing required syllabus' });
+    if(!course_name) return res.status(400).json({ status: 400, message: 'Missing required course_name' });
+    if(!description) return res.status(400).json({ status: 400, message: 'Missing required description' });
+    if(!teacher_id) return res.status(400).json({ status: 400, message: 'Missing required teacher_id' });
+    if(!class_id) return res.status(400).json({ status: 400, message: 'Missing required class_id' });
+    if(!pass_mark) return res.status(400).json({ status: 400, message: 'Missing required pass_mark' });
 
     const date = new Date();
     const updatedAt = date.getFullYear()+'/'+date.getUTCMonth()+'/'+date.getUTCDate();
 
-    db.query('UPDATE course_id SET course_name =?, description =?, teacher_id =?, class_id =?, pass_mark =?, updatedAt =? WHERE course_id =?', [ course_name, description, teacher_id, class_id, pass_mark, updatedAt, course_id ], (err, results) =>{
+    db.query('UPDATE courses SET course_name =?, description =?, teacher_id =?, class_id =?, pass_mark =?, updatedAt =? WHERE course_id =?', [ course_name, description, teacher_id, class_id, pass_mark, updatedAt, course_id ], (err, results) =>{
         if(err) return res.status(400).json({ status: 400, error: err });
         if(results.affectedRows === 1) {
-            return res.status(200).json({ status: 200, message: 'class updated successfully' });
+            return res.status(200).json({ status: 200, message: 'course updated successfully' });
         } else {
-            return res.status(400).json({ status: 400, message: 'class not found' });
+            return res.status(400).json({ status: 400, message: 'course not found' });
         }
     });
 });
@@ -109,4 +114,4 @@ courses.delete('/delete-all-courses', (req, res) => {
     });
 });
 
-module.exports = classes;
+module.exports = courses;

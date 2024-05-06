@@ -22,6 +22,13 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 100]
             }
         },
+        student_age: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+            validate: {
+                len: [0, 4]
+            }
+        },
         gender: {
             type: Sequelize.STRING,
             allowNull: true,
@@ -43,18 +50,25 @@ module.exports = (sequelize, Sequelize) => {
                 len: [0, 255]
             }
         },
+        house: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 255]
+            }
+        },
+        home_status: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            validate: {
+                len: [0, 255]
+            }
+        },
         profile_pic: {
             type: Sequelize.STRING,
             allowNull: true,
             validate: {
                 len: [0, 100]
-            }
-        },
-        student_age: {
-            type: Sequelize.INTEGER,
-            allowNull: true,
-            validate: {
-                len: [0, 4]
             }
         }
     },
@@ -72,6 +86,9 @@ module.exports = (sequelize, Sequelize) => {
                 fields: ['dob']
             },
             {
+                fields: ['student_age']
+            },
+            {
                 fields: ['gender']
             },
             {
@@ -83,9 +100,6 @@ module.exports = (sequelize, Sequelize) => {
             },
             {
                 fields: ['profile_pic']
-            },
-            {
-                fields: ['student_age']
             }
         ]
     });

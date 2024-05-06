@@ -121,5 +121,7 @@ module.exports = (sequelize, Sequelize) => {
         ]
     });
 
+    teachers.belongsTo(sequelize.models.classes, { foreignKey: 'class_id' });
+
     return teachers;
 };

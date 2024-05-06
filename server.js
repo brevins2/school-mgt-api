@@ -40,9 +40,17 @@ app.get('/', function (req, res) {
     });
 });
 
-app.use('/users', require('./routes/users'))
-app.use('/classes', require('./routes/classes'))
-app.use('/teachers', require('./routes/teachers'))
+app.use('/users', require('./routes/users'));
+app.use('/classes', require('./routes/classes'));
+app.use('/teachers', require('./routes/teachers'));
+app.use('/books', require('./routes/library'));
+app.use('/courses', require('./routes/courses'));
+app.use('/school_events', require('./routes/events'));
+app.use('/students', require('./routes/students'));
+app.use('/grades', require('./routes/grades'));
+app.use('/payments', require('./routes/payments'));
+app.use('/attendences', require('./routes/attendences'));
+app.use('/enrollments', require('./routes/enrollments'));
 
 
 app.listen(3000, () => {

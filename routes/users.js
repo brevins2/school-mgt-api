@@ -255,7 +255,10 @@ user.put('/change-avatar', upload.single('avatar'), (req, res) => {
     db.query('UPDATE users SET avatar = ? WHERE account_token = ?', [avatarUrl, token], (err, result) => {
         if (err) return res.status(500).json({ status: 500, error: err.message });
         if (result.affectedRows === 1) {
-            res.status(200).json({ status: 200, message: 'Avatar changed successfully', data: { avatarUrl } });
+            db.query('UPDATE teachers SET profile_pic = ? WHERE teacher_token = ?', [ avatarUrl, token ], (err, result) => {
+                if(err) return res.status(400).json({ status: 400, error: err });
+                if(result.affectedRows === 1)res.status(200).json({ status: 200, message: 'Avatar changed successfully', data: { avatarUrl } });
+            });
         } else {
             res.status(200).json({ status: 200, error: 'Failed to update avatar' });
         }
