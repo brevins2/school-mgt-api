@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const db_models = require('./models/index');
 var bodyParser = require('body-parser');
 
 const fs = require('fs');
@@ -20,11 +19,6 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
-db_models.sequelize.sync().then(() => {}).catch(err => {
-  console.error('Error syncing database tables:', err);
-});
-
-
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', function (req, res) {
@@ -41,16 +35,10 @@ app.get('/', function (req, res) {
 });
 
 app.use('/users', require('./routes/users'));
-app.use('/classes', require('./routes/classes'));
-app.use('/teachers', require('./routes/teachers'));
-app.use('/books', require('./routes/library'));
-app.use('/courses', require('./routes/courses'));
-app.use('/school_events', require('./routes/events'));
-app.use('/students', require('./routes/students'));
-app.use('/grades', require('./routes/grades'));
-app.use('/payments', require('./routes/payments'));
-app.use('/attendences', require('./routes/attendences'));
-app.use('/enrollments', require('./routes/enrollments'));
+app.use('/cart', require('./routes/cart'));
+app.use('/categories', require('./routes/category'));
+app.use('/packages', require('./routes/packages'));
+app.use('/orders', require('./routes/orders'));
 
 
 app.listen(3000, () => {
