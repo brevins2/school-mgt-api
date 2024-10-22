@@ -10,7 +10,7 @@ classes.get('/', (req, res) => {
         if(rows.length === 0)  {
             return res.status(200).json({ status: 200, message: 'No classes found', data: rows });
         } else {
-            res.json({status: 200, message: 'classes fetched successfully', data: rows});
+            res.json({status: 200, message: 'classes fetched successfully', number_of_classes: rows.length, data: rows});
         }
     });
 });

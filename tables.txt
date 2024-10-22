@@ -80,3 +80,25 @@
    - ISBN
    - Availability
    - Book cover
+   - Category
+
+11. **Report card**:
+
+
+
+
+12. **Transports Table**:
+
+
+
+13. **Co-curricular Activities**:
+
+
+
+
+14: **Inventory**:
+- uniforms
+- meals
+
+
+15: **Payroll**:

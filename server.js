@@ -9,11 +9,11 @@ const path = require('path');
 const app = express();
 
 var corsoptions = {
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3100',
     credentials: true
 }
 
-app.use(cors(corsoptions));
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -53,6 +53,6 @@ app.use('/attendences', require('./routes/attendences'));
 app.use('/enrollments', require('./routes/enrollments'));
 
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+app.listen(3100, () => {
+    console.log('Server is running on port 3100');
 })
